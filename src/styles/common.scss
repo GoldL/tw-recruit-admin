@@ -1,0 +1,167 @@
+// 全局变量
+@import './variables.scss';
+
+// 顶部右侧显示
+@import './top.scss';
+// 导航标签
+@import './tags.scss';
+// 工具类函数
+@import './mixin.scss';
+// 侧面导航栏
+@import './sidebar.scss';
+// 动画
+@import './animate/vue-transition.scss';
+//主题
+@import './theme/index.scss';
+//适配
+@import './media.scss';
+//通用配置
+@import './normalize.scss';
+// ele样式覆盖
+@import './element-ui.scss';
+@import './common-rdx.scss';
+
+a {
+  text-decoration: none;
+  color: #333;
+}
+* {
+  outline: none;
+}
+//滚动条样式
+@include scrollBar;
+
+.primary-color {
+  // 主颜色
+  color: $primary-color;
+}
+.error-color {
+  // 错误色
+  color: $error-color;
+}
+.success-color {
+  // 成功色
+  color: $success-color;
+}
+.warning-color {
+  // 警告色
+  color: $warning-color;
+}
+.info-color {
+  // 提示色
+  color: $info-color;
+}
+
+.text-color {
+  // 主文字颜色(主黑色，如#303133)
+  color: $text-color;
+}
+.text-color-secondary {
+  // 次要文字颜色(主灰色，如#606266)
+  color: $text-color-secondary;
+}
+.text-color-light {
+  // 辅助文字颜色(主亮灰色，如#909399)
+  color: $text-color-light;
+}
+
+.border-color {
+  // 主边框颜色
+  color: $border-color;
+}
+
+.bg-color {
+  // 主背景色
+  background-color: $bg-color;
+}
+.bg-white {
+  // 白色背景
+  background-color: #fff;
+}
+.bg-color-gray {
+  // 次背景色
+  background-color: $bg-color-gray;
+}
+
+.cicle-status {
+  display: inline-block;
+  position: relative;
+  padding-left: 20px;
+  &::after {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 50%;
+    width: 8px;
+    height: 8px;
+    background-color: $primary-color;
+    border-radius: 50%;
+    transform: translateY(-50%);
+  }
+  &.warn::after {
+    background-color: $warning-color;
+  }
+  &.success::after {
+    background-color: $success-color;
+  }
+  &.error::after {
+    background-color: $error-color;
+  }
+  &.info::after {
+    background-color: $border-color;
+  }
+}
+
+.no-top {
+  width: 100%;
+
+  .avue-crud__menu {
+    display: none;
+  }
+}
+
+.no-page {
+  width: 100%;
+
+  .avue-crud__pagination {
+    display: none;
+  }
+}
+
+.tc {
+  text-align: center;
+}
+
+.search-box {
+  margin: 20px 0;
+}
+
+.line-desc {
+  line-height: 34px;
+}
+
+.page-title {
+  margin-bottom: 20px;
+  font-size: 16px;
+  font-weight: bold;
+  color: #303133;
+  border-left: 6px solid $primary-color;
+  padding-left: 10px;
+  line-height: 1;
+}
+
+.avue-view .el-table__footer .cell {
+  line-height: 30px;
+  height: 30px;
+  font-weight: bold;
+}
+
+.avue-view .el-table__footer td {
+  text-align: center;
+  border-right: 1px solid #cecece;
+  background: #fff;
+  border-bottom: 1px solid rgba(206, 206, 206, 0.3);
+  &:nth-last-child(0) {
+    border-right: none;
+  }
+}
