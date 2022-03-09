@@ -21,7 +21,7 @@
       @selection-change="selectionChange"
     >
       <template slot="menuLeft">
-        <el-button type="danger" icon="el-icon-delete" size="small" @click="rowMulDel">批量删除</el-button>
+        <el-button type="danger" icon="el-icon-delete" size="small" plain @click="rowMulDel">批量删除</el-button>
       </template>
       <template slot="url" slot-scope="{row}">
         <el-link type="primary" @click="handleLink(row.url)">{{row.url}}</el-link>

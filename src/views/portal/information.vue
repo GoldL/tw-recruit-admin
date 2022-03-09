@@ -22,7 +22,7 @@
       :upload-after="uploadAfter"
     >
       <template slot="menuLeft">
-        <el-button type="danger" icon="el-icon-delete" size="small" @click="rowMulDel">批量删除</el-button>
+        <el-button type="danger" icon="el-icon-delete" size="small" plain @click="rowMulDel">批量删除</el-button>
       </template>
       <template slot-scope="{type}" slot="contentForm">
         <div v-if="type === 'view'" v-html="form.content"></div>

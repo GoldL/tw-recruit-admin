@@ -29,7 +29,7 @@
 
       <template slot="menuRight">
         <el-button type="primary" icon="el-icon-plus" size="small" @click="$refs.crud.rowAdd()">新增</el-button>
-        <el-button type="danger" icon="el-icon-delete" size="small" @click="rowMulDel">批量删除</el-button>
+        <el-button type="danger" icon="el-icon-delete" size="small" plain @click="rowMulDel">批量删除</el-button>
       </template>
     </avue-crud>
   </basic-container>

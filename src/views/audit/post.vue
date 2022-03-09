@@ -25,7 +25,7 @@
 
       <template v-if="auditStatus === '1'" slot="menuRight">
         <el-button type="primary" icon="el-icon-document-checked" size="small" @click="rowMulAudit(2)">批量通过</el-button>
-        <el-button type="danger" icon="el-icon-document-delete" size="small" @click="rowMulAudit(3)">批量不通过</el-button>
+        <el-button type="danger" icon="el-icon-document-delete" size="small" plain @click="rowMulAudit(3)">批量不通过</el-button>
       </template>
 
       <template slot-scope="{row}" slot="menu">
