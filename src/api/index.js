@@ -88,13 +88,13 @@ export const entranceRecruitExportUrl = `${baseUrl}export/system/listEntranceRec
 
 /** 门户-内容管理 */
 // 咨询中心 - 分页列表
-export const consultPageUrl = `${baseUrl}portal/consult/page`
+export const informationPageUrl = `${baseUrl}portal/information/page`
 // 咨询中心 - 保存或更新
-export const consultSaveUrl = `${baseUrl}portal/consult/save`
+export const informationSaveUrl = `${baseUrl}portal/information/save`
 // 咨询中心 - 详情
-export const consultDetailUrl = `${baseUrl}portal/consult/detail`
+export const informationDetailUrl = `${baseUrl}portal/information/detail`
 // 咨询中心 - 删除
-export const consultDelUrl = `${baseUrl}portal/consult/remote`
+export const informationDelUrl = `${baseUrl}portal/information/remote`
 
 // 轮播图 - 分页列表
 export const slideshowPageUrl = `${baseUrl}portal/slideshow/page`

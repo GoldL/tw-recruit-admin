@@ -33,7 +33,7 @@
 </template>
 
 <script>
-import { consultPageUrl, consultSaveUrl, consultDelUrl, dictUrl, uploadUrl } from '@/api'
+import { informationPageUrl, informationSaveUrl, informationDelUrl, dictUrl, uploadUrl } from '@/api'
 import TinymceEditor from '@/components/Tinymce/Tinymce'
 
 export default {
@@ -63,7 +63,7 @@ export default {
           { label: '标题', prop: 'title', span: 24, search: true, rules: [{ required: true, message: '请输入标题', trigger: 'blur' }] },
           {
             label: '咨询类型',
-            prop: 'consultTypeCode',
+            prop: 'informationTypeCode',
             span: 24,
             search: true,
             type: 'select',
@@ -111,11 +111,11 @@ export default {
     }
   },
   methods: {
-    async loadConsultType() {
-      const url = `${dictUrl}PORTAL_CONSULT_TYPE`
+    async loadInformationType() {
+      const url = `${dictUrl}PORTAL_INFORMATION_TYPE`
       const { data } = await this.$get(url)
       if (data && data.length && data[0].children && data[0].children.length) {
-        const networkDom = this.findObject(this.option.column, 'consultTypeCode')
+        const networkDom = this.findObject(this.option.column, 'informationTypeCode')
         networkDom.dicData = data[0].children
       }
     },
@@ -126,9 +126,9 @@ export default {
         current: page.currentPage,
         size: page.pageSize
       })
-      const { data } = await this.$post(consultPageUrl, paramsReq)
+      const { data } = await this.$post(informationPageUrl, paramsReq)
       data.records.forEach(item => {
-        item.consultTypeCode = item.consultTypeCode.dictKey
+        item.informationTypeCode = item.informationTypeCode.dictKey
         item.imgLink = item.img.link
         item.img = item.img.id
       })
@@ -139,7 +139,7 @@ export default {
     },
     async rowSave(row, loading, done) {
       try {
-        await this.$post(consultSaveUrl, row)
+        await this.$post(informationSaveUrl, row)
         loading()
         this.onLoad(this.page)
         this.$message({ type: 'success', message: '操作成功!' })
@@ -149,7 +149,7 @@ export default {
     },
     async rowUpdate(row, index, loading, done) {
       try {
-        await this.$post(consultSaveUrl, row)
+        await this.$post(informationSaveUrl, row)
         loading()
         this.onLoad(this.page)
         this.$message({ type: 'success', message: '操作成功!' })
@@ -163,7 +163,7 @@ export default {
         cancelButtonText: '取消',
         type: 'warning'
       }).then(async () => {
-        await this.$post(consultDelUrl, { ids: id }, false)
+        await this.$post(informationDelUrl, { ids: id }, false)
         this.onLoad(this.page)
         this.$message({ type: 'success', message: '操作成功!' })
       })
@@ -178,7 +178,7 @@ export default {
         cancelButtonText: '取消',
         type: 'warning'
       }).then(async () => {
-        await this.$post(consultDelUrl, { ids: this.ids }, false)
+        await this.$post(informationDelUrl, { ids: this.ids }, false)
         this.onLoad(this.page)
         this.$message({ type: 'success', message: '操作成功!' })
       })
@@ -215,7 +215,7 @@ export default {
     }
   },
   created() {
-    this.loadConsultType()
+    this.loadInformationType()
   }
 }
 </script>
