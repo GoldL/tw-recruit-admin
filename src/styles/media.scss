@@ -2,10 +2,9 @@
 .avue-header,
 .avue-top,
 .avue-logo,
-.avue-layout
-.login-logo,
+.avue-layout .login-logo,
 .avue-main {
-  transition: all .3s;
+  transition: all 0.3s;
 }
 
 .avue-contail {
@@ -15,7 +14,6 @@
   background-size: 100%;
   background-repeat: no-repeat;
 }
-
 
 .avue-left {
   position: fixed;
@@ -54,8 +52,9 @@
   left: 240px;
   padding: 0;
   padding-bottom: 20px;
+  padding-top: 10px;
   width: calc(100% - 240px);
-  height: calc(100% - 64px);
+  height: calc(100% - 74px);
   box-sizing: border-box;
   overflow: hidden;
   transition: all 0.5s;
@@ -102,7 +101,7 @@
   right: 0;
   top: 0;
   bottom: 0;
-  background-color: rgba(0, 0, 0, .3);
+  background-color: rgba(0, 0, 0, 0.3);
   z-index: 1024;
 
   &--show {

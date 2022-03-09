@@ -61,7 +61,6 @@ export default {
         calcHeight: 30,
         searchShow: true,
         searchMenuSpan: 4,
-        border: true,
         index: true,
         addBtn: false,
         menu: false,

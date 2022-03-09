@@ -14,15 +14,17 @@
       @on-load="onLoad"
     >
       <template slot="menuLeft">
-        <el-radio-group v-model="conductStatus" @change="refreshChange">
+        <el-radio-group v-model="conductStatus" size="small" @change="refreshChange">
           <el-radio-button v-for="(value, key) in conductStatusObj" :key="key" :label="key">
             <el-badge :hidden="!['2', '3', '4'].includes(key) && !todoNumOjb[key]" :value="todoNumOjb[key]" :max="99">{{ value }}</el-badge>
           </el-radio-button>
         </el-radio-group>
-        <div class="search-box">
-          <el-input v-model="searchValue" placeholder="输入搜索关键字" @input="refreshChange" suffix-icon="el-icon-search"></el-input>
-        </div>
       </template>
+
+      <template slot="menuRight">
+        <el-button type="primary" size="small" icon="el-icon-plus" @click="handleAdd">创建招聘会</el-button>
+      </template>
+
       <template slot="menu" slot-scope="{ row, type, size }">
         <el-button :size="size" :type="type" @click="handleDetail(row)">查看</el-button>
         <el-button v-if="row.conductStatus !== '6'" :size="size" :type="type" @click="handleEdit(row)">编辑</el-button>
@@ -30,9 +32,6 @@
         <el-button v-if="['2', '3'].includes(row.conductStatus)" :size="size" :type="type" @click="handleCancel(row)">撤销</el-button>
         <el-button v-if="['2,4', '4', '5'].includes(row.conductStatus)" :size="size" :type="type" @click="handleOff(row)">下线</el-button>
         <el-button v-if="['6'].includes(row.conductStatus)" :size="size" :type="type" @click="handleDel(row)">删除</el-button>
-      </template>
-      <template slot="menuRight">
-        <el-button type="primary" @click="handleAdd">创建招聘会</el-button>
       </template>
 
       <template slot-scope="{ row }" slot="name">
@@ -54,9 +53,10 @@
         <el-switch v-model="row.top" @change="topChange(row)"></el-switch>
       </template>
       <template slot-scope="{ row }" slot="conductStatus">
-        <span v-if="row.conductStatus.length === 1" :class="['cicle-status', conductStatusColor[row.conductStatus]]">{{
-          conductStatusObj[row.conductStatus]
-        }}</span>
+        <span
+          v-if="row.conductStatus.length === 1"
+          :class="['cicle-status', conductStatusColor[row.conductStatus]]"
+        >{{ conductStatusObj[row.conductStatus]}}</span>
         <span v-else class="cicle-status success">报名中/进行中</span>
       </template>
     </avue-crud>
@@ -91,8 +91,7 @@ export default {
         align: 'center',
         calcHeight: 30,
         searchShow: true,
-        searchMenuSpan: 4,
-        border: true,
+        searchMenuSpan: 6,
         index: true,
         columnBtn: false,
         dialogClickModal: false,
@@ -101,6 +100,7 @@ export default {
         delBtn: false,
         refreshBtn: false,
         column: [
+          { label: '招聘会名称', prop: 'searchValue', searchLabelWidth: 100, search: true, hide: true, display: false },
           { label: '招聘会', prop: 'name', slot: true },
           { label: '形式', prop: 'type', slot: true },
           { label: '参加单位', prop: 'companyCount', slot: true },
@@ -125,7 +125,6 @@ export default {
       const paramsReq = Object.assign(values, this.query, {
         current: page.currentPage,
         size: page.pageSize,
-        searchValue: this.searchValue,
         conductStatus: this.conductStatus
       })
       const { data } = await this.$post(jobFairPageUrl, paramsReq)

@@ -1,6 +1,7 @@
 // 全局变量
 @import './variables.scss';
-
+// 修改element系统内置颜色
+@import './element-variables.scss';
 // 顶部右侧显示
 @import './top.scss';
 // 导航标签

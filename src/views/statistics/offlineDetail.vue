@@ -29,9 +29,7 @@
           <span>{{ row.educationCode.dictValue ? row.educationCode.dictValue : '-' }}</span>
         </template>
         <template slot-scope="{ row }" slot="salaryExpectationMin">
-          <span v-if="row.salaryExpectationMin && row.salaryExpectationMax">
-            {{ row.salaryExpectationMin }}-{{ row.salaryExpectationMax }}元/月
-          </span>
+          <span v-if="row.salaryExpectationMin && row.salaryExpectationMax">{{ row.salaryExpectationMin }}-{{ row.salaryExpectationMax }}元/月</span>
           <span v-else-if="row.salaryExpectationMin">{{ row.salaryExpectationMin }}元以上/月</span>
           <span v-else-if="row.salaryExpectationMax">{{ row.salaryExpectationMax }}元以下/月</span>
           <span v-else>不限</span>
@@ -61,7 +59,6 @@ export default {
         calcHeight: 30,
         searchShow: true,
         searchMenuSpan: 4,
-        border: true,
         index: true,
         addBtn: false,
         menu: false,

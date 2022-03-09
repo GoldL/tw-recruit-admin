@@ -51,7 +51,6 @@ export default {
         calcHeight: 30,
         searchShow: true,
         searchMenuSpan: 4,
-        border: true,
         index: true,
         columnBtn: false,
         dialogClickModal: false,

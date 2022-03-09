@@ -1,52 +1,25 @@
 <template>
   <el-form class="login-form" status-icon :rules="loginRules" ref="loginForm" :model="loginForm" label-width="0">
-    <el-form-item v-if="tenantMode" prop="tenantId">
-      <el-input
-        size="small"
-        @keyup.enter.native="handleLogin"
-        v-model="loginForm.tenantId"
-        auto-complete="off"
-        :placeholder="$t('login.tenantId')"
-      >
-        <i slot="prefix" class="icon-quanxian" />
-      </el-input>
-    </el-form-item>
     <el-form-item prop="username">
-      <el-input
-        size="small"
-        @keyup.enter.native="handleLogin"
-        v-model="loginForm.username"
-        auto-complete="off"
-        :placeholder="$t('login.username')"
-      >
-        <i slot="prefix" class="icon-yonghu" />
+      <el-input @keyup.enter.native="handleLogin" v-model="loginForm.username" auto-complete="off" :placeholder="$t('login.username')">
+        <i slot="prefix" class="icon-yonghu icon" />
       </el-input>
     </el-form-item>
     <el-form-item prop="password">
       <el-input
-        size="small"
         @keyup.enter.native="handleLogin"
         :type="passwordType"
         v-model="loginForm.password"
         auto-complete="off"
         :placeholder="$t('login.password')"
       >
-        <i class="el-icon-view el-input__icon" slot="suffix" @click="showPassword" />
-        <i slot="prefix" class="icon-mima" />
+        <i slot="prefix" class="icon-mima icon" />
       </el-input>
     </el-form-item>
     <el-form-item v-if="this.website.captchaMode" prop="code">
       <el-row :span="24">
         <el-col :span="16">
-          <el-input
-            size="small"
-            @keyup.enter.native="handleLogin"
-            v-model="loginForm.code"
-            auto-complete="off"
-            :placeholder="$t('login.code')"
-          >
-            <i slot="prefix" class="icon-yanzhengma" />
-          </el-input>
+          <el-input @keyup.enter.native="handleLogin" v-model="loginForm.code" auto-complete="off" :placeholder="$t('login.code')"></el-input>
         </el-col>
         <el-col :span="8">
           <div class="login-code">
@@ -56,11 +29,8 @@
       </el-row>
     </el-form-item>
     <el-form-item>
-      <el-button type="primary" size="small" @click.native.prevent="handleLogin" class="login-submit">{{$t('login.submit')}}</el-button>
+      <el-button type="primary" class="login-submit" round @click.native.prevent="handleLogin">{{$t('login.submit')}}</el-button>
     </el-form-item>
-    <el-dialog title="用户信息选择" append-to-body :visible.sync="userBox" width="350px">
-      <avue-form :option="userOption" v-model="userForm" @submit="submitLogin" />
-    </el-dialog>
   </el-form>
 </template>
 
@@ -69,6 +39,7 @@ import { mapGetters } from 'vuex'
 import { info } from '@/api/system/tenant'
 import { getCaptcha } from '@/api/user'
 import { getTopUrl } from '@/util/util'
+import website from '@/config/website'
 
 export default {
   name: 'userlogin',
@@ -97,11 +68,12 @@ export default {
       },
       loginRules: {
         tenantId: [{ required: false, message: '请输入租户ID', trigger: 'blur' }],
-        username: [{ required: true, message: '请输入用户名', trigger: 'blur' }],
+        username: [{ required: true, message: '请输入帐号', trigger: 'blur' }],
         password: [
           { required: true, message: '请输入密码', trigger: 'blur' },
           { min: 1, message: '密码长度最少为6位', trigger: 'blur' }
-        ]
+        ],
+        code: [{ required: true, message: '请输入验证码', trigger: 'blur' }]
       },
       passwordType: 'password',
       userBox: false,
@@ -219,7 +191,7 @@ export default {
           })
           this.$store
             .dispatch('LoginByUsername', this.loginForm)
-            .then(() => {
+            .then(async () => {
               if (this.website.switchMode) {
                 const deptId = this.userInfo.dept_id
                 const roleId = this.userInfo.role_id
@@ -233,7 +205,19 @@ export default {
                   return false
                 }
               }
-              this.$router.push({ path: this.tagWel.value })
+              // 登录权限第一个
+              loading.close()
+              const data = await this.$store.dispatch('GetMenu')
+              if (!data.length) {
+                this.$router.push({ path: this.tagWel.value })
+                return
+              }
+              this.$router.$avueRouter.formatRoutes(data, true)
+              const label = data[0].children && data[0].children.length ? data[0].children[0].name : data[0].name
+              const path = data[0].children && data[0].children.length ? data[0].children[0].path : data[0].path
+              website.fistPage.label = label
+              website.fistPage.value = path
+              this.$router.push({ path })
               loading.close()
             })
             .catch(() => {
@@ -259,6 +243,3 @@ export default {
   }
 }
 </script>
-
-<style>
-</style>

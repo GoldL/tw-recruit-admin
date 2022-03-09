@@ -22,6 +22,13 @@
       :upload-after="uploadAfter"
     >
       <template slot="menuLeft">
+        <el-radio-group v-model="deviceType" size="small" @change="searchReset">
+          <el-radio-button v-for="(name, label) in  deviceTypeObj" :key="label" :label="label">{{name}}</el-radio-button>
+        </el-radio-group>
+      </template>
+
+      <template slot="menuRight">
+        <el-button type="primary" icon="el-icon-plus" size="small" @click="$refs.crud.rowAdd()">新增</el-button>
         <el-button type="danger" icon="el-icon-delete" size="small" @click="rowMulDel">批量删除</el-button>
       </template>
     </avue-crud>
@@ -34,6 +41,8 @@ import { slideshowPageUrl, slideshowSaveUrl, slideshowDelUrl, uploadUrl } from '
 export default {
   data() {
     return {
+      deviceType: 1,
+      deviceTypeObj: { 1: 'PC端', 2: '移动端' },
       form: {},
       data: [],
       query: {},
@@ -45,11 +54,11 @@ export default {
         calcHeight: 30,
         searchShow: true,
         searchMenuSpan: 4,
-        border: true,
         index: true,
         columnBtn: false,
         dialogClickModal: false,
         refreshBtn: false,
+        addBtn: false,
         viewBtn: true,
         selection: true,
         tip: false,
@@ -59,7 +68,6 @@ export default {
             label: '设备类型',
             prop: 'deviceType',
             span: 24,
-            search: true,
             type: 'select',
             dicData: [
               { label: 'PC端', value: 1 },
@@ -105,7 +113,8 @@ export default {
       this.loading = true
       const paramsReq = Object.assign(values, this.query, {
         current: page.currentPage,
-        size: page.pageSize
+        size: page.pageSize,
+        deviceType: this.deviceType
       })
       const { data } = await this.$post(slideshowPageUrl, paramsReq)
       data.records.forEach(item => {

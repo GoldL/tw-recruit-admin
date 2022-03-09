@@ -14,14 +14,11 @@
       @on-load="onLoad"
     >
       <template slot="menuLeft">
-        <el-radio-group v-model="status" @change="raidoChange">
+        <el-radio-group v-model="status" size="small" @change="raidoChange">
           <el-radio-button v-for="(value, key) in statusObj" :key="key" :label="key">
             <el-badge :hidden="key !== '2' || !auditNum" :value="auditNum" :max="99">{{ value }}</el-badge>
           </el-radio-button>
         </el-radio-group>
-        <div class="search-box">
-          <el-input v-model="searchValue" placeholder="输入搜索关键字" @input="refreshChange" suffix-icon="el-icon-search"></el-input>
-        </div>
       </template>
       <template slot="menu" slot-scope="{ row, type, size }">
         <el-button :size="size" :type="type" @click="handleDetail(row)">{{ row.status === 2 ? '审核' : '查看' }}</el-button>
@@ -77,9 +74,7 @@
           <span v-else>男{{ row.requireMaleCount }},女{{ row.requireFemaleCount }}</span>
         </template>
         <template slot-scope="{ row }" slot="salaryExpectationMin">
-          <span v-if="row.salaryExpectationMin && row.salaryExpectationMax">
-            {{ row.salaryExpectationMin }}-{{ row.salaryExpectationMax }}元/月
-          </span>
+          <span v-if="row.salaryExpectationMin && row.salaryExpectationMax">{{ row.salaryExpectationMin }}-{{ row.salaryExpectationMax }}元/月</span>
           <span v-else-if="row.salaryExpectationMin">{{ row.salaryExpectationMin }}元以上/月</span>
           <span v-else-if="row.salaryExpectationMax">{{ row.salaryExpectationMax }}元以下/月</span>
           <span v-else>不限</span>
@@ -102,9 +97,9 @@
             <el-input v-if="row.status === 4" v-model="row.refuseReason" placeholder="请输入拒绝理由" :maxlength="32"></el-input>
           </div>
           <div v-else>
-            <span :class="['cicle-status', row.jobFairCompanyPostStatus === 3 ? 'success' : 'error']">{{
-              row.jobFairCompanyPostStatus === 3 ? '通过' : '拒绝'
-            }}</span>
+            <span
+              :class="['cicle-status', row.jobFairCompanyPostStatus === 3 ? 'success' : 'error']"
+            >{{ row.jobFairCompanyPostStatus === 3 ? '通过' : '拒绝' }}</span>
             <span v-if="row.refuseReason">（{{ row.refuseReason }}）</span>
           </div>
         </template>
@@ -123,7 +118,6 @@ import { jobFairApprovalPageUrl, jobFairApprovalDetailUrl, jobFairApprovalSubmit
 export default {
   data() {
     return {
-      searchValue: '',
       status: '0',
       statusObj: { 0: '全部', 2: '待审批', 3: '已审批', 4: '已作废' },
       data: [],
@@ -135,7 +129,6 @@ export default {
         calcHeight: 30,
         searchShow: true,
         searchMenuSpan: 4,
-        border: true,
         index: true,
         columnBtn: false,
         dialogClickModal: false,
@@ -144,6 +137,7 @@ export default {
         delBtn: false,
         refreshBtn: false,
         column: [
+          { label: '招聘会名称', prop: 'searchValue', searchLabelWidth: 100, search: true, hide: true, display: false },
           { label: '招聘会', prop: 'name', slot: true },
           { label: '参加单位', prop: 'companyName', slot: true },
           { label: '形式', prop: 'type', slot: true },
@@ -196,7 +190,6 @@ export default {
       const paramsReq = Object.assign(values, this.query, {
         current: page.currentPage,
         size: page.pageSize,
-        searchValue: this.searchValue,
         status: this.status === '0' ? '' : this.status
       })
       const { data } = await this.$post(jobFairApprovalPageUrl, paramsReq)

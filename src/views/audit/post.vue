@@ -18,14 +18,16 @@
       @selection-change="selectionChange"
     >
       <template slot="menuLeft">
-        <el-radio-group v-model="auditStatus" size="medium" @change="searchReset">
+        <el-radio-group v-model="auditStatus" size="small" @change="searchReset">
           <el-radio-button v-for="(name, label) in  auditStatusObj" :key="label" :label="label">{{name}}</el-radio-button>
         </el-radio-group>
-        <template v-if="auditStatus === '1'">
-          <el-button type="primary" icon="el-icon-document-checked" size="small" class="rdx-m-l-20" @click="rowMulAudit(2)">批量通过</el-button>
-          <el-button type="danger" icon="el-icon-document-delete" size="small" @click="rowMulAudit(3)">批量不通过</el-button>
-        </template>
       </template>
+
+      <template v-if="auditStatus === '1'" slot="menuRight">
+        <el-button type="primary" icon="el-icon-document-checked" size="small" @click="rowMulAudit(2)">批量通过</el-button>
+        <el-button type="danger" icon="el-icon-document-delete" size="small" @click="rowMulAudit(3)">批量不通过</el-button>
+      </template>
+
       <template slot-scope="{row}" slot="menu">
         <el-button v-if="row.auditStatus === '1'" type="text" icon="el-icon-document-checked" @click="rowAudit(row, 2)">通过</el-button>
         <el-button v-if="row.auditStatus === '1'" type="text" icon="el-icon-document-delete" @click="rowAudit(row, 3)">不通过</el-button>
@@ -64,7 +66,6 @@ export default {
         searchShow: true,
         searchMenuSpan: 4,
         labelWidth: 140,
-        border: true,
         index: true,
         columnBtn: false,
         dialogClickModal: false,

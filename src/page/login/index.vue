@@ -1,57 +1,27 @@
 <template>
-  <div class="login-container"
-       ref="login"
-       @keyup.enter.native="handleLogin">
-    <top-color v-show="false"></top-color>
-    <div class="login-weaper animated bounceInDown">
-      <div class="login-left">
-        <div class="login-time">
-          {{time}}
-        </div>
-        <img class="img" src="/img/logo.png" alt="">
-        <p class="title">{{ $t('login.info') }}</p>
-      </div>
-      <div class="login-border">
-        <div class="login-main">
-          <h4 class="login-title">
-            {{ $t('login.title') }}{{website.title}}
-            <top-lang></top-lang>
-          </h4>
-          <userLogin v-if="activeName==='user'"></userLogin>
-          <codeLogin v-else-if="activeName==='code'"></codeLogin>
-          <thirdLogin v-else-if="activeName==='third'"></thirdLogin>
-          <div class="login-menu">
-            <a href="#" @click.stop="activeName='user'">{{ $t('login.userLogin') }}</a>
-            <!--<a href="#" @click.stop="activeName='code'">{{ $t('login.phoneLogin') }}</a>-->
-            <a href="#" @click.stop="activeName='third'">{{ $t('login.thirdLogin') }}</a>
-          </div>
-        </div>
-
+  <div class="login-container" ref="login" @keyup.enter="handleLogin">
+    <div class="login-main">
+      <div class="title">厦门市思明区台湾人才服务中心</div>
+      <div class="login-content">
+        <div class="login-title">帐号登录</div>
+        <userLogin></userLogin>
       </div>
     </div>
   </div>
 </template>
 <script>
 import userLogin from './userlogin'
-import codeLogin from './codelogin'
-import thirdLogin from './thirdlogin'
 import { mapGetters } from 'vuex'
 import { dateFormat } from '@/util/date'
 import { validatenull } from '@/util/validate'
-import topLang from '@/page/index/top/top-lang'
-import topColor from '@/page/index/top/top-color'
 import { getQueryString, getTopUrl } from '@/util/util'
 
 export default {
   name: 'login',
   components: {
-    userLogin,
-    codeLogin,
-    thirdLogin,
-    topLang,
-    topColor
+    userLogin
   },
-  data () {
+  data() {
     return {
       time: '',
       activeName: 'user',
@@ -64,27 +34,26 @@ export default {
     }
   },
   watch: {
-    $route () {
+    $route() {
       this.handleLogin()
     }
   },
-  created () {
+  created() {
     this.handleLogin()
     this.getTime()
   },
-  mounted () {
-  },
+  mounted() {},
   computed: {
     ...mapGetters(['website', 'tagWel'])
   },
   props: [],
   methods: {
-    getTime () {
+    getTime() {
       setInterval(() => {
         this.time = dateFormat(new Date())
       }, 1000)
     },
-    handleLogin () {
+    handleLogin() {
       const topUrl = getTopUrl()
       const redirectUrl = '/oauth/redirect/'
       this.socialForm.source = getQueryString('source')
@@ -101,13 +70,16 @@ export default {
           text: '第三方系统登录中,请稍后。。。',
           spinner: 'el-icon-loading'
         })
-        this.$store.dispatch('LoginBySocial', this.socialForm).then(() => {
-          window.location.href = topUrl.split(redirectUrl)[0]
-          this.$router.push({ path: this.tagWel.value })
-          loading.close()
-        }).catch(() => {
-          loading.close()
-        })
+        this.$store
+          .dispatch('LoginBySocial', this.socialForm)
+          .then(() => {
+            window.location.href = topUrl.split(redirectUrl)[0]
+            this.$router.push({ path: this.tagWel.value })
+            loading.close()
+          })
+          .catch(() => {
+            loading.close()
+          })
       }
     }
   }
@@ -115,5 +87,5 @@ export default {
 </script>
 
 <style lang="scss">
-  @import "@/styles/login.scss";
+@import '@/styles/login.scss';
 </style>

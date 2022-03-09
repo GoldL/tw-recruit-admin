@@ -36,7 +36,6 @@ export default {
         calcHeight: 30,
         searchShow: true,
         searchMenuSpan: 4,
-        border: true,
         searchLabelWidth: 120,
         index: true,
         columnBtn: false,

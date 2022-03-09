@@ -1,38 +1,24 @@
 <template>
-  <div class="avue-tags"
-       v-if="showTag">
+  <div class="avue-tags" v-if="showTag">
     <!-- tag盒子 -->
-    <div v-if="contextmenuFlag"
-         class="avue-tags__contentmenu"
-         :style="{left:contentmenuX+'px',top:contentmenuY+'px'}">
-      <div class="item"
-           @click="clearCacheTags">{{$t('tagsView.clearCache')}}
-      </div>
-      <div class="item"
-           @click="closeOthersTags">{{$t('tagsView.closeOthers')}}
-      </div>
-      <div class="item"
-           @click="closeAllTags">{{$t('tagsView.closeAll')}}
-      </div>
+    <div v-if="contextmenuFlag" class="avue-tags__contentmenu" :style="{left:contentmenuX+'px',top:contentmenuY+'px'}">
+      <div class="item" @click="clearCacheTags">{{$t('tagsView.clearCache')}}</div>
+      <div class="item" @click="closeOthersTags">{{$t('tagsView.closeOthers')}}</div>
+      <div class="item" @click="closeAllTags">{{$t('tagsView.closeAll')}}</div>
     </div>
-    <div class="avue-tags__box"
-         :class="{'avue-tags__box--close':!website.isFirstPage}">
-      <el-tabs v-model="active"
-               type="card"
-               @contextmenu.native="handleContextmenu"
-               :closable="tagLen!==1"
-               @tab-click="openTag"
-               @edit="menuTag">
-        <el-tab-pane :key="item.value"
-                     v-for="item in tagList"
-                     :label="generateTitle(item)"
-                     :name="item.value">
-        </el-tab-pane>
-
+    <div class="avue-tags__box" :class="{'avue-tags__box--close':!website.isFirstPage}">
+      <el-tabs
+        v-model="active"
+        type="card"
+        @contextmenu.native="handleContextmenu"
+        :closable="tagLen!==1"
+        @tab-click="openTag"
+        @edit="menuTag"
+      >
+        <el-tab-pane :key="item.value" v-for="item in tagList" :label="generateTitle(item)" :name="item.value"></el-tab-pane>
       </el-tabs>
       <el-dropdown class="avue-tags__menu">
-        <el-button type="primary"
-                   size="mini">
+        <el-button type="primary" size="mini">
           {{$t('tagsView.menu')}}
           <i class="el-icon-arrow-down el-icon--right"></i>
         </el-button>
@@ -44,7 +30,6 @@
         </el-dropdown-menu>
       </el-dropdown>
     </div>
-
   </div>
 </template>
 <script>
@@ -53,7 +38,7 @@ import { clearCache } from '@/api/user'
 
 export default {
   name: 'tags',
-  data () {
+  data() {
     return {
       active: '',
       contentmenuX: '',
@@ -61,16 +46,15 @@ export default {
       contextmenuFlag: false
     }
   },
-  created () {
-  },
-  mounted () {
+  created() {},
+  mounted() {
     this.setActive()
   },
   watch: {
-    tag () {
+    tag() {
       this.setActive()
     },
-    contextmenuFlag () {
+    contextmenuFlag() {
       window.addEventListener('mousedown', this.watchContextmenu)
     }
   },
@@ -79,24 +63,21 @@ export default {
     ...mapState({
       showTag: state => state.common.showTag
     }),
-    tagLen () {
+    tagLen() {
       return this.tagList.length || 0
     }
   },
   methods: {
-    generateTitle (item) {
-      return this.$router.$avueRouter.generateTitle(
-        item.label,
-        (item.meta || {}).i18n
-      )
+    generateTitle(item) {
+      return this.$router.$avueRouter.generateTitle(item.label, (item.meta || {}).i18n)
     },
-    watchContextmenu (event) {
+    watchContextmenu(event) {
       if (!this.$el.contains(event.target) || event.button !== 0) {
         this.contextmenuFlag = false
       }
       window.removeEventListener('mousedown', this.watchContextmenu)
     },
-    handleContextmenu (event) {
+    handleContextmenu(event) {
       let target = event.target
       // 解决 https://github.com/d2-projects/d2-admin/issues/54
       let flag = false
@@ -115,10 +96,10 @@ export default {
       }
     },
     // 激活当前选项
-    setActive () {
+    setActive() {
       this.active = this.tag.value
     },
-    menuTag (value, action) {
+    menuTag(value, action) {
       if (action === 'remove') {
         let { tag, key } = this.findTag(value)
         this.$store.commit('DEL_TAG', tag)
@@ -128,7 +109,7 @@ export default {
         }
       }
     },
-    openTag (item) {
+    openTag(item) {
       let tag
       if (item.name) {
         tag = this.findTag(item.name).tag
@@ -136,18 +117,21 @@ export default {
         tag = item
       }
       this.$router.push({
-        path: this.$router.$avueRouter.getPath({
-          name: tag.label,
-          src: tag.value
-        }, tag.meta),
+        path: this.$router.$avueRouter.getPath(
+          {
+            name: tag.label,
+            src: tag.value
+          },
+          tag.meta
+        ),
         query: tag.query
       })
     },
-    closeOthersTags () {
+    closeOthersTags() {
       this.contextmenuFlag = false
       this.$store.commit('DEL_TAG_OTHER')
     },
-    findTag (value) {
+    findTag(value) {
       let tag, key
       this.tagList.map((item, index) => {
         if (item.value === value) {
@@ -157,7 +141,7 @@ export default {
       })
       return { tag: tag, key: key }
     },
-    closeAllTags () {
+    closeAllTags() {
       this.contextmenuFlag = false
       this.$store.commit('DEL_ALL_TAG')
       this.$router.push({
@@ -167,7 +151,7 @@ export default {
         query: this.tagWel.query
       })
     },
-    clearCacheTags () {
+    clearCacheTags() {
       this.$confirm('是否需要清除缓存?', {
         confirmButtonText: '确定',
         cancelButtonText: '取消',
