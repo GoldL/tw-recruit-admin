@@ -1,6 +1,6 @@
 <template>
   <div class="header-box">
-    <div class="title">厦门市思明区台湾人才服务中心</div>
+    <div class="header-title">厦门市思明区台湾人才服务中心</div>
     <div>
       <img class="top-bar__img" :src="userInfo.avatar" />
       <el-dropdown>
@@ -64,7 +64,7 @@ export default {
   background-size: 100%;
 }
 
-.title {
+.header-title {
   font-size: 30px;
   font-weight: bold;
 }

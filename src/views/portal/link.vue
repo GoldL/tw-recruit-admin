@@ -94,7 +94,7 @@ export default {
         current: page.currentPage,
         size: page.pageSize
       })
-      const { data } = await this.$post(linkPageUrl, paramsReq)
+      const { data } = await this.$post(linkPageUrl, paramsReq, false)
       this.data = data
       this.selectionClear()
       this.loading = false

@@ -45,8 +45,20 @@ export default {
             collapse: true,
             column: [
               { label: '联系方式', prop: 'contact', span: 24, rules: [{ required: true, message: '请填写联系方式', trigger: 'blur' }] },
-              { label: '工作时间', prop: 'creditCode', span: 24, rules: [{ required: true, message: '请填写工作时间', trigger: 'blur' }] },
-              { label: '联系地址', prop: 'address', span: 24, rules: [{ required: true, message: '请填写联系地址', trigger: 'blur' }] }
+              {
+                label: '工作时间',
+                prop: 'workTime',
+                span: 24,
+                type: 'textarea',
+                rules: [{ required: true, message: '请填写工作时间', trigger: 'blur' }]
+              },
+              {
+                label: '联系地址',
+                prop: 'address',
+                span: 24,
+                type: 'textarea',
+                rules: [{ required: true, message: '请填写联系地址', trigger: 'blur' }]
+              }
             ]
           }
         ]

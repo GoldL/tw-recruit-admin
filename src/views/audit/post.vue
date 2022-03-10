@@ -84,7 +84,7 @@ export default {
           { label: '文化程度', prop: 'educationCodeName' },
           { label: '工作年限', prop: 'workYearsName' },
           { label: '薪资待遇', prop: 'salaryExpectationMinName' },
-          { label: '福利', prop: 'welfareName' },
+          { label: '福利', prop: 'welfareName', overHidden: true },
           { label: '年龄要求', prop: 'ageMaxName', hide: true },
           { label: '专业', prop: 'majorCodeName', hide: true },
           { label: '人员类别', prop: 'staffCategoryCodeName', hide: true },
