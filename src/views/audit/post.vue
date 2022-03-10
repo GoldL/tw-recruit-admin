@@ -29,8 +29,8 @@
       </template>
 
       <template slot-scope="{row}" slot="menu">
-        <el-button v-if="row.auditStatus === '1'" type="text" icon="el-icon-document-checked" @click="rowAudit(row, 2)">通过</el-button>
-        <el-button v-if="row.auditStatus === '1'" type="text" icon="el-icon-document-delete" @click="rowAudit(row, 3)">不通过</el-button>
+        <el-button v-if="row.auditStatus === 1" type="text" icon="el-icon-document-checked" @click="rowAudit(row, 2)">通过</el-button>
+        <el-button v-if="row.auditStatus === 1" type="text" icon="el-icon-document-delete" @click="rowAudit(row, 3)">不通过</el-button>
       </template>
       <template slot-scope="{row}" slot="companyName">
         <span>{{row.company.name}}</span>
@@ -135,7 +135,7 @@ export default {
         item.staffCategoryCodeName = item.staffCategoryCode && item.staffCategoryCode.dictValue
         item.staffSourceCodeName = item.staffSourceCode && item.staffSourceCode.dictValue
         item.employmentModeCodeName = item.employmentModeCode && item.employmentModeCode.dictValue
-        item.workAddressCodeName = item.workAddressCode && item.workAddressCode.dictValue
+        item.workAddressCodeName = item.workAddressCode.map(w => w.dictValue).join(',')
       })
       this.page.total = data.total
       this.selectionClear()
