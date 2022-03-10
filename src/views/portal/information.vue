@@ -1,7 +1,7 @@
 
 <template>
   <basic-container>
-    <div class="page-title">咨询管理</div>
+    <div class="page-title">资讯管理</div>
     <avue-crud
       ref="crud"
       :data="data"
@@ -61,14 +61,14 @@ export default {
         column: [
           { label: '标题', prop: 'title', span: 24, search: true, rules: [{ required: true, message: '请输入标题', trigger: 'blur' }] },
           {
-            label: '咨询类型',
+            label: '资讯类型',
             prop: 'informationTypeCode',
             span: 24,
             search: true,
             type: 'select',
             props: { label: 'dictValue', value: 'dictKey' },
             dicData: [],
-            rules: [{ required: true, message: '请选择咨询类型', trigger: 'blur' }]
+            rules: [{ required: true, message: '请选择资讯类型', trigger: 'blur' }]
           },
           {
             label: '序号',
@@ -157,7 +157,7 @@ export default {
       }
     },
     rowDel({ id, title }) {
-      this.$confirm(`确定删除<${title}>的咨询?`, {
+      this.$confirm(`确定删除<${title}>的资讯?`, {
         confirmButtonText: '确定',
         cancelButtonText: '取消',
         type: 'warning'
@@ -172,7 +172,7 @@ export default {
         this.$message.warning('至少选中一条数据')
         return
       }
-      this.$confirm('确定删除选中的咨询?', {
+      this.$confirm('确定删除选中的资讯?', {
         confirmButtonText: '确定',
         cancelButtonText: '取消',
         type: 'warning'

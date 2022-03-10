@@ -17,20 +17,14 @@
           >{{option.detail ? '编辑' : '取消'}}</el-button>
         </div>
       </template>
-      <template slot="content">
-        <div v-if="option.detail" v-html="form.content"></div>
-        <tinymce-editor v-else id="editor1" :obj="form" keyName="content" height="400px"></tinymce-editor>
-      </template>
     </avue-form>
   </basic-container>
 </template>
 
 <script>
 import { orgDetailUrl, orgSaveUrl, uploadUrl } from '@/api'
-import TinymceEditor from '@/components/Tinymce/Tinymce'
 
 export default {
-  components: { TinymceEditor },
   data() {
     return {
       showForm: false,
@@ -67,7 +61,8 @@ export default {
                 label: '简介',
                 prop: 'content',
                 span: 24,
-                formslot: true,
+                type: 'textarea',
+                maxRows: 100,
                 rules: [{ required: true, message: '请填写简介', trigger: 'blur' }]
               }
             ]

@@ -87,13 +87,13 @@ export const stallCountExportUrl = `${baseUrl}export/system/listStallDetail`
 export const entranceRecruitExportUrl = `${baseUrl}export/system/listEntranceRecruitDetail`
 
 /** 门户-内容管理 */
-// 咨询中心 - 分页列表
+// 资讯中心 - 分页列表
 export const informationPageUrl = `${baseUrl}portal/information/page`
-// 咨询中心 - 保存或更新
+// 资讯中心 - 保存或更新
 export const informationSaveUrl = `${baseUrl}portal/information/save`
-// 咨询中心 - 详情
+// 资讯中心 - 详情
 export const informationDetailUrl = `${baseUrl}portal/information/detail`
-// 咨询中心 - 删除
+// 资讯中心 - 删除
 export const informationDelUrl = `${baseUrl}portal/information/remote`
 
 // 轮播图 - 分页列表

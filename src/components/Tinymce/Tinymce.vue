@@ -223,4 +223,8 @@ body.tox-fullscreen .tox.tox-tinymce.tox-fullscreen {
     max-height: 100%;
   }
 }
+
+.tox-tinymce-aux {
+  z-index: 999999 !important;
+}
 </style>
