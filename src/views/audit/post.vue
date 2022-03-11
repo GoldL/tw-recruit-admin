@@ -153,12 +153,11 @@ export default {
     },
     handleAudit(ids, auditStatus) {
       const title = this.auditStatusObj[auditStatus]
-      this.$prompt(`请填写${title}理由`, '提示', {
-        confirmButtonText: '确定',
-        cancelButtonText: '取消',
-        inputPattern: /\S/,
-        inputErrorMessage: `请填写${title}理由`
-      }).then(async ({ value: reason }) => {
+      const pt = { confirmButtonText: '确定', cancelButtonText: '取消' }
+      if (auditStatus === 3) {
+        Object.assign(pt, { inputPattern: /\S/, inputErrorMessage: `请填写${title}理由` })
+      }
+      this.$prompt(`请填写${title}理由`, '提示', pt).then(async ({ value: reason }) => {
         await this.$post(postAuditBatchUrl, { ids, auditStatus, reason })
         this.onLoad(this.page)
         this.$message({ type: 'success', message: '操作成功!' })

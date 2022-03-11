@@ -69,6 +69,7 @@ export default {
             prop: 'deviceType',
             span: 24,
             type: 'select',
+            width: 80,
             dicData: [
               { label: 'PC端', value: 1 },
               { label: '移动端', value: 2 }
@@ -80,6 +81,7 @@ export default {
             prop: 'orderNo',
             span: 24,
             type: 'number',
+            width: 80,
             precision: 0,
             rules: [{ required: true, message: '请输入序号', trigger: 'blur' }]
           },
@@ -93,7 +95,7 @@ export default {
             propsHttp: { res: 'data', name: 'fileName', url: 'link' },
             canvasOption: { ratio: 0.5, text: ' ' },
             accept: 'image/*',
-            tip: '请上传 宽度200px 高度110px 的 jepg/png/gif/bmp 轮播图',
+            tip: '添加PC端轮播图(最佳上传尺寸：1920px*500px)',
             action: uploadUrl,
             rules: [{ required: true, message: '请上传轮播图', trigger: 'blur' }]
           },
@@ -105,6 +107,13 @@ export default {
   computed: {
     ids() {
       return this.selectionList.map(s => s.id).join(',')
+    }
+  },
+  watch: {
+    deviceType(value) {
+      const tipObj = { 1: '1920px*500px', 2: '750px*30px' }
+      const imgLinkDom = this.findObject(this.option.column, 'imgLink')
+      imgLinkDom.tip = `添加${this.deviceTypeObj[value]}轮播图(最佳上传尺寸：${tipObj[value]}）`
     }
   },
   methods: {
@@ -205,3 +214,10 @@ export default {
   }
 }
 </script>
+
+<style lang="scss" scoped>
+/deep/ .avue-crud__img img,
+.avue-crud__img video {
+  height: 100px;
+}
+</style>
